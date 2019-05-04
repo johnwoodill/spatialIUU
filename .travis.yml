@@ -18,4 +18,6 @@ install:
   - conda install --yes --file requirements.txt
   
 
-script: pytest
+script: 
+  - pytest test-spherical_dist.py
+  - pytest test-spherical_dist.py
