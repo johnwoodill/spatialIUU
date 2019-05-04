@@ -29,7 +29,6 @@ import os as os
 import glob
 from joblib import Parallel, delayed
 import multiprocessing
-import gc
 from datetime import datetime, timedelta
 import sys
 
