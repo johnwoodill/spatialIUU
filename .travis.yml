@@ -19,5 +19,5 @@ install:
   
 
 script: 
-  - pytest test-spherical_dist.py
-  - pytest test-spherical_dist.py
+  - pytest tests/test-spherical_dist.py
+  - pytest tests/test-spherical_dist.py
