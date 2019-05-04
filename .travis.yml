@@ -12,7 +12,9 @@ before_install:
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
   - export PATH=/home/travis/miniconda/bin:$PATH
+  - source "$HOME"/miniconda/etc/profile.d/conda.sh
   - conda update --yes conda
+
 
 install:
   - conda create --yes -n test python=$TRAVIS_PYTHON_VERSION
