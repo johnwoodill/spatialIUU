@@ -1,3 +1,11 @@
 numpy
 pandas
 pytest
+feather
+os
+glob
+joblib 
+multiprocessing
+gc
+datetime
+sys
