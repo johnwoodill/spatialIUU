@@ -89,36 +89,36 @@ class dataStep():
     #     tdiff = round(tdiff.seconds/60/60, 2)
     #     return tdiff
 
-    def spherical_dist_populate(lat_lis, lon_lis, r=6371):
-        """
-        Calculate spherical distance (km) for list of lat/lon
+def spherical_dist_populate(lat_lis, lon_lis, r=6371):
+    """
+    Calculate spherical distance (km) for list of lat/lon
 
-        Args:
-            lat_lis: list of latitude locations
-            lon_lis: list of longitude locations
-            r: radius of the Earth (3959 miles & 6371 km) 
+    Args:
+        lat_lis: list of latitude locations
+        lon_lis: list of longitude locations
+        r: radius of the Earth (3959 miles & 6371 km) 
 
-        Returns:
-            pairwise distance matrix
-        """
-        
-        
+    Returns:
+        pairwise distance matrix
+    """
+    
+    
 
-        lat_mtx = np.array([lat_lis]).T * np.pi / 180
-        lon_mtx = np.array([lon_lis]).T * np.pi / 180
+    lat_mtx = np.array([lat_lis]).T * np.pi / 180
+    lon_mtx = np.array([lon_lis]).T * np.pi / 180
 
-        cos_lat_i = np.cos(lat_mtx)
-        cos_lat_j = np.cos(lat_mtx)
-        cos_lat_J = np.repeat(cos_lat_j, len(lat_mtx), axis=1).T
+    cos_lat_i = np.cos(lat_mtx)
+    cos_lat_j = np.cos(lat_mtx)
+    cos_lat_J = np.repeat(cos_lat_j, len(lat_mtx), axis=1).T
 
-        lat_Mtx = np.repeat(lat_mtx, len(lat_mtx), axis=1).T
-        cos_lat_d = np.cos(lat_mtx - lat_Mtx)
+    lat_Mtx = np.repeat(lat_mtx, len(lat_mtx), axis=1).T
+    cos_lat_d = np.cos(lat_mtx - lat_Mtx)
 
-        lon_Mtx = np.repeat(lon_mtx, len(lon_mtx), axis=1).T
-        cos_lon_d = np.cos(lon_mtx - lon_Mtx)
+    lon_Mtx = np.repeat(lon_mtx, len(lon_mtx), axis=1).T
+    cos_lon_d = np.cos(lon_mtx - lon_Mtx)
 
-        mtx = r * np.arccos(cos_lat_d - cos_lat_i*cos_lat_J*(1 - cos_lon_d))
-        return mtx
+    mtx = r * np.arccos(cos_lat_d - cos_lat_i*cos_lat_J*(1 - cos_lon_d))
+    return mtx
 
     def GFW_directories():
         """ Get GFW directory list """
