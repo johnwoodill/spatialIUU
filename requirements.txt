@@ -3,5 +3,5 @@ pandas
 datetime
 pytest
 joblib
-multiprocessing
+multiprocess
 glob
