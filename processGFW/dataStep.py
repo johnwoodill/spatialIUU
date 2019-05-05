@@ -32,6 +32,8 @@ import multiprocessing
 from datetime import datetime, timedelta
 import sys
 
+
+
 # CONSTANTS
 GFW_DIR = '/data2/GFW_point/'
 GFW_OUT_DIR_CSV = '/home/server/pi/homes/woodilla/Data/GFW_point/Patagonia_Shelf/csv/'
@@ -119,18 +121,18 @@ def spherical_dist_populate(lat_lis, lon_lis, r=6371):
     mtx = r * np.arccos(cos_lat_d - cos_lat_i*cos_lat_J*(1 - cos_lon_d))
     return mtx
 
-    def GFW_directories():
-        """ Get GFW directory list """
-        
-        dirs = os.listdir(GFW_DIR)
-        # Remove subfolders 'BK' and 'identities'
-        if 'BK' in dirs:
-            dirs.remove('BK')
-        
-        if 'identities' in dirs:
-            dirs.remove('identities')
-        
-        return dirs
+def GFW_directories():
+    """ Get GFW directory list """
+    
+    dirs = os.listdir(GFW_DIR)
+    # Remove subfolders 'BK' and 'identities'
+    if 'BK' in dirs:
+        dirs.remove('BK')
+    
+    if 'identities' in dirs:
+        dirs.remove('identities')
+    
+    return dirs
 
     def calc_kph(data):
         """
