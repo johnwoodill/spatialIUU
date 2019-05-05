@@ -134,56 +134,56 @@ def GFW_directories():
     
     return dirs
 
-    def calc_kph(data):
-        """
-        Calculate kph
+def calc_kph(data):
+    """
+    Calculate kph
 
-        Args:
-            data: DataFrame with lat and lon
+    Args:
+        data: DataFrame with datetime, lat, and lon
 
-        Returns:
-            Processed DataFrame
-        """
+    Returns:
+        Processed DataFrame
+    """
 
-        # Calculate distance traveled
-        data = data.sort_values('timestamp')
-        fobs_lat = data['lat'].iat[0]
-        fobs_lon = data['lon'].iat[0]
-        lat_lag = data['lat'].shift(1, fill_value=fobs_lat)
-        lon_lag = data['lon'].shift(1, fill_value=fobs_lon)
-        lat = data['lat'].values
-        lon = data['lon'].values
+    # Calculate distance traveled
+    data = data.sort_values('timestamp')
+    fobs_lat = data['lat'].iat[0]
+    fobs_lon = data['lon'].iat[0]
+    lat_lag = data['lat'].shift(1, fill_value=fobs_lat)
+    lon_lag = data['lon'].shift(1, fill_value=fobs_lon)
+    lat = data['lat'].values
+    lon = data['lon'].values
+    
+    tlag = data['timestamp'].shift(1, fill_value=data['timestamp'].iat[0])
+    
+    outvalues = pd.Series()
+    outvalues2 = pd.Series()
+    for i in range(len(data)):
+        # Calculate distance
+        lat1 = lat_lag.iat[i]
+        lat2 = lat[i]
+        lon1 = lon_lag.iat[i]
+        lon2 = lon[i]
+        d = pd.Series(round(spherical_dist_populate([lat1, lat2], [lon1, lon2] )[0][1], 2))
+        outvalues = outvalues.append(d, ignore_index=True)
         
-        tlag = data['timestamp'].shift(1, fill_value=data['timestamp'].iat[0])
+        # Calculate travel time
+        t1 = data.timestamp.iat[i]
+        t2 = tlag.iat[i]   
         
-        outvalues = pd.Series()
-        outvalues2 = pd.Series()
-        for i in range(len(data)):
-            # Calculate distance
-            lat1 = lat_lag.iat[i]
-            lat2 = lat[i]
-            lon1 = lon_lag.iat[i]
-            lon2 = lon[i]
-            d = pd.Series(round(spherical_dist_populate([lat1, lat2], [lon1, lon2] )[0][1], 2))
-            outvalues = outvalues.append(d, ignore_index=True)
-            
-            # Calculate travel time
-            t1 = data.timestamp.iat[i]
-            t2 = tlag.iat[i]   
-            
-            t1 = datetime.strptime(t1, "%Y-%m-%d %H:%M:%S UTC")
-            t2 = datetime.strptime(t2, "%Y-%m-%d %H:%M:%S UTC")
+        t1 = datetime.strptime(t1, "%Y-%m-%d %H:%M:%S UTC")
+        t2 = datetime.strptime(t2, "%Y-%m-%d %H:%M:%S UTC")
+    
+        tdiff = abs(t2 - t1)
+        tdiff = pd.Series(round(tdiff.seconds/60/60, 4))
+        outvalues2 = outvalues2.append(tdiff)
         
-            tdiff = abs(t2 - t1)
-            tdiff = pd.Series(round(tdiff.seconds/60/60, 4))
-            outvalues2 = outvalues2.append(tdiff)
-            
-        data['dist'] = outvalues.values
-        data['travel_time'] = outvalues2.values   
-        data['kph'] = data['dist']/data['travel_time'] 
-        data['kph'] = np.where(data['travel_time'] == 0, 0, data['kph'])
+    data['dist'] = outvalues.values
+    data['travel_time'] = outvalues2.values   
+    data['kph'] = data['dist']/data['travel_time'] 
+    data['kph'] = np.where(data['travel_time'] == 0, 0, data['kph'])
 
-        return data
+    return data
 
 
     def process(data): 
