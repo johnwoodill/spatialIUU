@@ -20,4 +20,4 @@ install:
 
 script: 
   - pytest tests/test-spherical_dist.py
-  - pytest  tests/test-GFW_dir.py
+  # - pytest tests/test-GFW_dir.py # Internal test of directory structure
