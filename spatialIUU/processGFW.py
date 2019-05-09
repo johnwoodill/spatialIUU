@@ -256,8 +256,9 @@ def processGFW(i):
 
  
     # (2) Keep vessels 1/2 kilometer from port or shore 
-    outdat = outdat[outdat['distance_from_shore_m'] > 500]
-    outdat = outdat[outdat['distance_from_port_m'] > 500]
+    outdat = outdat[outdat['distance_from_shore_m'] >= 500]
+    outdat = outdat[outdat['distance_from_port_m'] >= 500]
+    outdat = outdat[outdat['elevation_m'] <= -100]
     
     # (3) Remove inconsistent tracks due to spoofing or noisy data
     # Results from calc_speed_dist.py

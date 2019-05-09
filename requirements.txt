@@ -1,6 +1,0 @@
-numpy
-pandas
-pytest
-joblib
-#multiprocessing
-#glob3
