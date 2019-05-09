@@ -9,5 +9,3 @@
 Overview
 --------
 The following repo provides custom classes and methods for spatial IUU events.
-
-https://travis-ci.com/johnwoodill/spatialIUU#
