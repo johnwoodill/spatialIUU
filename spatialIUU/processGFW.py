@@ -256,8 +256,9 @@ def processGFW(i):
 
  
     # (2) Keep vessels 1/2 kilometer from port or shore 
-    outdat = outdat[outdat['distance_from_shore_m'] > 500]
-    outdat = outdat[outdat['distance_from_port_m'] > 500]
+    outdat = outdat[outdat['distance_from_shore_m'] >= 500]
+    outdat = outdat[outdat['distance_from_port_m'] >= 500]
+    outdat = outdat[outdat['elevation_m'] <= -100]
     
     # (3) Remove inconsistent tracks due to spoofing or noisy data
     # Results from calc_speed_dist.py
@@ -427,3 +428,4 @@ def compileData(beg_date, end_date, region, parallel=False, ncores=None):
 
     savedat = savedat.reset_index(drop=True)
     savedat.to_feather(f"{PROC_DATA_LOC}{REGION}_5NN_region{region}_{beg_date}_{end_date}.feather")
+
